@@ -59,6 +59,7 @@ namespace KillGarena
                 try
                 {
                     GpServiceController.Stop();
+                    ServiceHelper.ChangeStartMode(GpServiceController, ServiceStartMode.Disabled);
                     Log("Stopped Garena Platform Service.");
                 }
                 catch (InvalidOperationException e)
