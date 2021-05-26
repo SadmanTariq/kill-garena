@@ -12,14 +12,22 @@ namespace KillGarena
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        static void Main()
-        {
-            ServiceBase[] ServicesToRun;
-            ServicesToRun = new ServiceBase[]
+        static void Main(string[] args)  
+{
+            if (Environment.UserInteractive)
             {
+                KillGarena service1 = new KillGarena();
+                service1.TestStartupAndStop(args);
+            }
+            else
+            {
+                ServiceBase[] ServicesToRun;
+                ServicesToRun = new ServiceBase[]
+                {
                 new KillGarena()
-            };
-            ServiceBase.Run(ServicesToRun);
+                };
+                ServiceBase.Run(ServicesToRun);
+            }
         }
     }
 }

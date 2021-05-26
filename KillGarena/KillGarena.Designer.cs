@@ -34,7 +34,7 @@ namespace KillGarena
             // 
             // KillGarena
             // 
-            this.ServiceName = "Service1";
+            this.ServiceName = "KillGarena";
             ((System.ComponentModel.ISupportInitialize)(this.eventLog1)).EndInit();
 
         }
