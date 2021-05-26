@@ -20,14 +20,17 @@ namespace KillGarena
         {
             InitializeComponent();
 
-            eventLog1 = new EventLog();
             if (!EventLog.SourceExists("KillGarena service"))
             {
                 EventLog.CreateEventSource(
                     "KillGarena service", "KillGarena");
             }
-            eventLog1.Source = "KillGarena service";
-            eventLog1.Log = "KillGarena";
+
+            eventLog1 = new EventLog
+            {
+                Source = "KillGarena service",
+                Log = "KillGarena"
+            };
         }
 
         protected override void OnStart(string[] args)
@@ -37,27 +40,37 @@ namespace KillGarena
             Log("Started.", EventLogEntryType.Information);
 
             Timer timer = new Timer();
-            timer.Interval = 5000;  // 30 seconds
-            //timer.Interval = 30000;  // 30 seconds
+            timer.Interval = 30000;  // 30 seconds
             timer.Elapsed += OnTimer;
             timer.Start();
         }
 
-        private void OnTimer(object sender, ElapsedEventArgs e)
+        private void OnTimer(object sender, ElapsedEventArgs args)
         {
-            eventLog1.WriteEntry("Timer", EventLogEntryType.Information);
-            if (GpServiceController.Status == ServiceControllerStatus.Running)
+            GpServiceController.Refresh();
+
+            bool oldKill = Kill;
+            // Service running but not the process.
+            Kill = (GpServiceController.Status == ServiceControllerStatus.Running) && !GarenaProcessRunning();
+
+            // Only kill if conditions match in both last and current poll.
+            if (oldKill && Kill)
             {
-                Log("Garena service running.");
-            }
-            if (GarenaProcessRunning())
-            {
-                Log("Garena process running.");
+                try
+                {
+                    GpServiceController.Stop();
+                    Log("Stopped Garena Platform Service.");
+                }
+                catch (InvalidOperationException e)
+                {
+                    Log("An error occurred while trying to stop Garena service.\n" + e.Message, EventLogEntryType.Error);
+                }
             }
         }
 
         protected override void OnStop()
         {
+            GpServiceController.Close();
             Log("Stopped.");
         }
 
