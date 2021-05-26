@@ -5,6 +5,12 @@ VisualStudioVersion = 16.0.31105.61
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KillGarena", "KillGarena\KillGarena.csproj", "{326799D9-8D78-49C6-AC56-9B56A6709AF8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "InstallScripts", "InstallScripts", "{FC42BC79-5D35-469E-9A5C-54CB2414C326}"
+	ProjectSection(SolutionItems) = preProject
+		InstallScripts\Install.bat = InstallScripts\Install.bat
+		InstallScripts\Uninstall.bat = InstallScripts\Uninstall.bat
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
