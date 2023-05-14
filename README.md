@@ -1,3 +1,5 @@
+> This project is now archived since League of Legends in SEA is not run by Garena anymore.
+
 # KillGarena
 The Garena launcher has a background service running all the time even when the launcher is closed. No one knows what this service does and the launcher seems to work fine without it. I wrote this service to kill Garena's service automatically because I don't trust them.
 
